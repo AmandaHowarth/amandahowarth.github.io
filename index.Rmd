@@ -6,7 +6,7 @@ output:
 
 ## ABOUT ME 
 
-My name is Amanda Howarth, and I am a student at [Columbia University Mailman School of Public Health](https://www.mailman.columbia.edu/), where I am studying in the Department of Epidemiology and have a certificate in Applied Biostatistics. My interests include data analysis, cancer epidemiology, and infectious disease epidemiology. I currently work at the [New York City Department of Health](https://www1.nyc.gov/site/doh/index.page), conducting salmonella surveillance in New York City. My thesis is focusing on the complex relationship between diabetes and breast cancer. 
+My name is Amanda Howarth, and I am a second-year student at [Columbia University Mailman School of Public Health](https://www.mailman.columbia.edu/), where I am studying in the Department of Epidemiology and have a certificate in Applied Biostatistics. My interests include data analysis, cancer epidemiology, and infectious disease epidemiology. I currently work at the [New York City Department of Health](https://www1.nyc.gov/site/doh/index.page), conducting salmonella surveillance in New York City. My thesis focuses on the complex relationship between diabetes and breast cancer. 
 
 I am originally from [Freehold, NJ](http://twp.freehold.nj.us/) and receieved my undergraduate degree in Public Health and Biology at [The George Washington University](https://www.gwu.edu/). 
 
