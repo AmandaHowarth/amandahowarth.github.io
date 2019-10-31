@@ -1,12 +1,13 @@
 ---
 title: "Holy cow!"
+output: html_document 
 ---
 
 ### I have a webpage!
 
 And I can put all kinds of stuff on it!
 
-## Lets add some links
+## Lets add some links!
 
 I am from [Freehold, NJ](http://twp.freehold.nj.us/)
 
