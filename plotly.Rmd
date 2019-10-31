@@ -1,9 +1,6 @@
 ---
 title: "My awesome website"
-output: 
-  html_document:
-    toc: true
-    toc_float: true
+output: html_document
 ---
 
 My name is Amanda and I make websites _with interactive graphs_ !!!
