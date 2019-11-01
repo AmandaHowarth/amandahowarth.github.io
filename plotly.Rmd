@@ -1,6 +1,66 @@
 ---
-title: "My awesome website"
-output: html_document
+title: "Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
 ---
 
-My name is Amanda and I make websites _with interactive graphs_ !!!
+```{r setup, include = FALSE}
+library(tidyverse)
+library(viridis)
+library(plotly)
+library(flexdashboard)
+library(rnoaa)
+```
+
+```{r include = FALSE}
+library(p8105.datasets)
+```
+
+```{r include = FALSE}
+weather_df = 
+  rnoaa::meteo_pull_monitors(c("USW00094728", "USC00519397", "USS0023B17S"),
+                      var = c("PRCP", "TMIN", "TMAX", "SNOW", "SNWD"), 
+                      date_min = "2016-01-01",
+                      date_max = "2016-12-31") %>%
+  mutate(
+    name = recode(id, USW00094728 = "CentralPark_NY", 
+                      USC00519397 = "Waikiki_HA",
+                      USS0023B17S = "Waterhole_WA"),
+    tmin = tmin / 10,
+    tmax = tmax / 10,
+    month = lubridate::floor_date(date, unit = "month")) %>%
+    select(name, id, date, month, everything()) %>% 
+  rename(precipitation = prcp, maximum_temperature = tmax, minimum_temperature = tmin, location = name, snow_depth_mm = snwd, snowfall_mm = snow) 
+```
+
+Column {data-width=650}
+-------------------------------------------------------------------------------------------------------------------
+## CHART A
+
+```{r warning = FALSE}
+plot_1 = plot_ly(weather_df,
+    x = ~date, y = ~minimum_temperature, type = "scatter", mode = "markers",
+    color = ~location, alpha = 0.5, colors = "Set1") 
+plot_1
+```
+Column {data-width=350}
+-------------------------------------------------------------------------------------------------------------------
+## CHART B
+
+```{r warning = FALSE}
+plot2 =
+plot_ly(weather_df, y = ~maximum_temperature, color = ~location, type = "box",
+          colors = "Set1")
+plot2
+```
+
+## CHART C
+
+```{r warning = FALSE}
+plot3 =
+   plot_ly(weather_df, x = ~date, y = ~precipitation, color = ~location, type = "bar")
+plot3
+```
+
