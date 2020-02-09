@@ -8,7 +8,7 @@ output: html_document
 **Columbia University Mailman School of Public Health, New York, NY May 2020** <br>
 Master of Public Health (MPH) in Epidemiology, Certificate in Applied Biostatistics                                                             
 
-**Coursework:** Applied Regression I & II, Data Science I & II, Analysis of Categorical Data, Epidemiology 3: Applied Epidemiologic Analysis, Cancer Epidemiology, Data Science, Relational Databases and SQL Programming
+**Coursework:** Applied Regression I & II, Data Science I & II, Analysis of Categorical Data, Epidemiology 3: Applied Epidemiologic Analysis, Cancer Epidemiology, Relational Databases and SQL Programming
 
 **The George Washington University Milken Institute School of Public Health, Washington, D.C. May 2017** <br>
 Bachelor of Science (BS), Double Major in Public Health and Biology                                                                                 
@@ -47,8 +47,8 @@ _Grants and Research Fellow/Associate (October 2017–January 2018)_
 
 **Association of Schools and Colleges of Optometry (ASCO), Rockville, MD, February 2017–May 2017** <br>
 _Intern_ <br>
-•	Conducted interviews with pre-optometry students and ASCO’s president to write blog posts for Eye on Optometry <br>
-•	Developed journal topics and wrote articles for ASCO's online journal, Eye on Education <br>
+•	Conducted interviews with [pre-optometry students](https://optometriceducation.org/pre-optometry-clubs-with-brighter-visions-helping-their-campus-community-one-day-at-a-time/) and ASCO’s [president](https://optometriceducation.org/a-short-conversation-with-dr-david-damari-asco-president/) to write blog posts for Eye on Optometry <br>
+•	Developed journal topics and [wrote articles](https://eye.opted.org/3758) for ASCO's online journal, Eye on Education <br>
 •	Analyzed optometry school applicant data and utilized Excel to create visuals for the public
 
 **Truth Initiative, Washington, D.C., September 2016–December 2016** <br>         _Youth Activism Intern_ <br>
