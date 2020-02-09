@@ -6,9 +6,9 @@ output:
 
 ## ABOUT ME 
 
-My name is Amanda Howarth, and I am a second-year student at [Columbia University Mailman School of Public Health](https://www.mailman.columbia.edu/), where I am studying in the Department of Epidemiology and have a certificate in Applied Biostatistics. My interests include data analysis, cancer epidemiology, and infectious disease epidemiology. I currently work at the [New York City Department of Health](https://www1.nyc.gov/site/doh/index.page), conducting salmonella surveillance in New York City. I have also performed research at [Columbia University School of Nursing](https://www.nursing.columbia.edu/). My thesis focuses on the complex relationship between diabetes and breast cancer, using data from the Breast Cancer Family Registry Cohort. 
+My name is Amanda Howarth, and I am a second-year student at [Columbia University Mailman School of Public Health](https://www.mailman.columbia.edu/), where I am studying in the Department of Epidemiology and have a certificate in Applied Biostatistics. My interests include data analysis, cancer epidemiology, and infectious disease epidemiology. I currently work at the [New York City Department of Health](https://www1.nyc.gov/site/doh/index.page), conducting salmonella surveillance in New York City. I have also performed research at [Columbia University School of Nursing](https://www.nursing.columbia.edu/). My thesis focuses on the complex relationship between diabetes and breast cancer, using data from the [Breast Cancer Family Registry Cohort](http://www.bcfamilyregistry.org/). 
 
-I am originally from [Freehold, NJ](http://twp.freehold.nj.us/) and receieved my undergraduate degree at [The George Washington University](https://www.gwu.edu/) with majors in Public Health and Biology. 
+I am originally from [Freehold, NJ](http://twp.freehold.nj.us/) and received my undergraduate degree at [The George Washington University](https://www.gwu.edu/) with majors in Public Health and Biology. 
 
-<img src="headshot_1.jpg" style="width:75%"></div>
+<img src="headshot_1.jpg" style="width:25%; border:5px; margin-right: 30px" align="left">
 
