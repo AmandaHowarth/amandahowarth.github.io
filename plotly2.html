@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>NYC EMS Research</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.46.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.46.1/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 61px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h2 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h3 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h4 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h5 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.section h6 {
+  padding-top: 66px;
+  margin-top: -66px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">HOME</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">Resume</a>
+</li>
+<li>
+  <a href="plotly.html">Plotly</a>
+</li>
+<li>
+  <a href="plotly2.html">Plotly 2</a>
+</li>
+<li>
+  <a href="mailto:&lt;amandamhowarth@gmail.com&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/AmandaHowarth/">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://linkedin.com/in/amandahowarth/">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">NYC EMS Research</h1>
+
+</div>
+
+
+<pre class="r"><code>ems_data_clean = read.csv(&quot;./data/EMS_Incident_Dispatch_Data.csv&quot;) %&gt;%
+  select(INITIAL_SEVERITY_LEVEL_CODE, FINAL_SEVERITY_LEVEL_CODE, INITIAL_CALL_TYPE,
+         DISPATCH_RESPONSE_SECONDS_QY, INCIDENT_TRAVEL_TM_SECONDS_QY, HELD_INDICATOR, BOROUGH,
+         ZIPCODE, INCIDENT_DISPOSITION_CODE, INCIDENT_DATETIME) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  separate(col = incident_datetime, into = c(&#39;date&#39;, &#39;time&#39;, &#39;ampm&#39;), sep = &#39; &#39;) %&gt;% 
+  unite(&quot;time1&quot;, time:ampm, sep = &#39; &#39;) %&gt;%
+  separate(col = date, into = c(&quot;month&quot;,&quot;day&quot;), sep = &#39;/&#39;) %&gt;% 
+  mutate(month = factor(month, levels = c(&quot;01&quot;, &quot;02&quot;, &quot;03&quot;, &quot;04&quot;, &quot;05&quot;, &quot;06&quot;, &quot;07&quot;, &quot;08&quot;, &quot;09&quot;, &quot;10&quot;, &quot;11&quot;, &quot;12&quot;), labels = c(&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;June&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sept&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;), ordered = TRUE)) %&gt;% 
+  mutate(arrival_outcome = ifelse(incident_disposition_code == &quot;83&quot;, &quot;dead&quot;, &quot;alive&quot;),
+         arrival_outcome = recode_factor(arrival_outcome, `0` = &quot;alive&quot;, `1` = &quot;dead&quot;),
+         initial_severity_level_code = factor(initial_severity_level_code, 
+ levels = c(&quot;1&quot;, &quot;2&quot;,&quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;), ordered = TRUE),
+         final_severity_level_code = factor(final_severity_level_code, 
+                                            levels = c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;), ordered = TRUE), 
+         held_indicator = recode(held_indicator, &quot;N&quot; = &quot;no&quot;, &quot;Y&quot; = &quot;yes&quot;)) %&gt;%
+  mutate(neighbourhood = recode(zipcode, &quot;10026&quot; = &quot;central harlem&quot;, &quot;10027&quot; = &quot;central harlem&quot;, &quot;10030&quot; = &quot;central harlem&quot;, &quot;10037&quot; = &quot;central harlem&quot;, &quot;10039&quot; = &quot;central harlem&quot;, &quot;10001&quot; = &quot;chelsea and clinton&quot;, &quot;10001&quot; = &quot;chelsea and clinton&quot;, &quot;10011&quot; = &quot;chelsea and clinton&quot;, &quot;10018&quot; = &quot;chelsea and clinton&quot;, &quot;10019&quot; = &quot;chelsea and clinton&quot;, &quot;10020&quot; = &quot;chelsea and clinton&quot;, &quot;10036&quot; = &quot;chelsea and clinton&quot;,  &quot;10029&quot; = &quot;east harlem&quot;, &quot;10035&quot; = &quot;east harlem&quot;, &quot;10010&quot; = &quot;gramercy park and murray hill&quot;, &quot;10016&quot; = &quot;gramercy park and murray hill&quot;, &quot;10017&quot; = &quot;gramercy park and murray hill&quot;, &quot;10022&quot; = &quot;gramercy park and murray hill&quot;, &quot;10012&quot; = &quot;greenwich village and soho&quot;, &quot;10013&quot; = &quot;greenwich village and soho&quot;, &quot;10014&quot; = &quot;greenwich village and soho&quot;, &quot;10004&quot; = &quot;lower manhattan&quot;, &quot;10005&quot; = &quot;lower manhattan&quot;, &quot;10006&quot; = &quot;lower manhattan&quot;, &quot;10007&quot; = &quot;lower manhattan&quot;, &quot;10038&quot; = &quot;lower manhattan&quot;, &quot;10280&quot; = &quot;lower manhattan&quot;, &quot;10002&quot; = &quot;lower east side&quot;, &quot;10003&quot; = &quot;lower east side&quot;, &quot;10009&quot; = &quot;lower east side&quot;, &quot;10021&quot; = &quot;upper east side&quot;, &quot;10028&quot; = &quot;upper east side&quot;, &quot;10044&quot; = &quot;upper east side&quot;, &quot;10065&quot; = &quot;upper east side&quot;, &quot;10075&quot; = &quot;upper east side&quot;, &quot;10128&quot; = &quot;upper east side&quot;, &quot;10023&quot; = &quot;upper west side&quot;, &quot;10024&quot; = &quot;upper west side&quot;, &quot;10025&quot; = &quot;upper west side&quot;, &quot;10031&quot; = &quot;inwood and washington heights&quot;, &quot;10032&quot; = &quot;inwood and washington heights&quot;, &quot;10033&quot; = &quot;inwood and washington heights&quot;, &quot;10034&quot; = &quot;inwood and washington heights&quot;, &quot;10040&quot; = &quot;inwood and washington heights&quot; )
+  ) %&gt;%  
+  drop_na(neighbourhood) %&gt;% 
+    select(-incident_disposition_code) </code></pre>
+<div id="death-counts-by-month" class="section level2">
+<h2>Death Counts by Month</h2>
+<div id="htmlwidget-ea999656d555bc565dcc" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ea999656d555bc565dcc">{"x":{"visdat":{"1061229dbba6":["function () ","plotlyVisDat"]},"cur_data":"1061229dbba6","attrs":{"1061229dbba6":{"y":{},"x":{},"color":{},"alpha":0.7,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Death Count on Arrival for each Month in 2018","xaxis":{"domain":[0,1],"automargin":true,"title":"Month","type":"category","categoryorder":"array","categoryarray":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Dead on Arrival (n)"},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"showSendToCloud":false},"data":[{"y":[175],"x":["Dec"],"type":"bar","name":"Dec","marker":{"color":"rgba(253,231,37,0.7)","line":{"color":"rgba(253,231,37,1)"}},"textfont":{"color":"rgba(253,231,37,0.7)"},"error_y":{"color":"rgba(253,231,37,0.7)"},"error_x":{"color":"rgba(253,231,37,0.7)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[181],"x":["Nov"],"type":"bar","name":"Nov","marker":{"color":"rgba(194,223,35,0.7)","line":{"color":"rgba(194,223,35,1)"}},"textfont":{"color":"rgba(194,223,35,0.7)"},"error_y":{"color":"rgba(194,223,35,0.7)"},"error_x":{"color":"rgba(194,223,35,0.7)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[166],"x":["Oct"],"type":"bar","name":"Oct","marker":{"color":"rgba(133,213,74,0.7)","line":{"color":"rgba(133,213,74,1)"}},"textfont":{"color":"rgba(133,213,74,0.7)"},"error_y":{"color":"rgba(133,213,74,0.7)"},"error_x":{"color":"rgba(133,213,74,0.7)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[143],"x":["Sept"],"type":"bar","name":"Sept","marker":{"color":"rgba(81,197,106,0.7)","line":{"color":"rgba(81,197,106,1)"}},"textfont":{"color":"rgba(81,197,106,0.7)"},"error_y":{"color":"rgba(81,197,106,0.7)"},"error_x":{"color":"rgba(81,197,106,0.7)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[161],"x":["Aug"],"type":"bar","name":"Aug","marker":{"color":"rgba(43,176,127,0.7)","line":{"color":"rgba(43,176,127,1)"}},"textfont":{"color":"rgba(43,176,127,0.7)"},"error_y":{"color":"rgba(43,176,127,0.7)"},"error_x":{"color":"rgba(43,176,127,0.7)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[192],"x":["Jul"],"type":"bar","name":"Jul","marker":{"color":"rgba(30,155,138,0.7)","line":{"color":"rgba(30,155,138,1)"}},"textfont":{"color":"rgba(30,155,138,0.7)"},"error_y":{"color":"rgba(30,155,138,0.7)"},"error_x":{"color":"rgba(30,155,138,0.7)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[169],"x":["June"],"type":"bar","name":"June","marker":{"color":"rgba(37,133,142,0.7)","line":{"color":"rgba(37,133,142,1)"}},"textfont":{"color":"rgba(37,133,142,0.7)"},"error_y":{"color":"rgba(37,133,142,0.7)"},"error_x":{"color":"rgba(37,133,142,0.7)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[150],"x":["May"],"type":"bar","name":"May","marker":{"color":"rgba(45,112,142,0.7)","line":{"color":"rgba(45,112,142,1)"}},"textfont":{"color":"rgba(45,112,142,0.7)"},"error_y":{"color":"rgba(45,112,142,0.7)"},"error_x":{"color":"rgba(45,112,142,0.7)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[153],"x":["Apr"],"type":"bar","name":"Apr","marker":{"color":"rgba(56,89,140,0.7)","line":{"color":"rgba(56,89,140,1)"}},"textfont":{"color":"rgba(56,89,140,0.7)"},"error_y":{"color":"rgba(56,89,140,0.7)"},"error_x":{"color":"rgba(56,89,140,0.7)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[164],"x":["Mar"],"type":"bar","name":"Mar","marker":{"color":"rgba(67,62,133,0.7)","line":{"color":"rgba(67,62,133,1)"}},"textfont":{"color":"rgba(67,62,133,0.7)"},"error_y":{"color":"rgba(67,62,133,0.7)"},"error_x":{"color":"rgba(67,62,133,0.7)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[168],"x":["Feb"],"type":"bar","name":"Feb","marker":{"color":"rgba(72,33,115,0.7)","line":{"color":"rgba(72,33,115,1)"}},"textfont":{"color":"rgba(72,33,115,0.7)"},"error_y":{"color":"rgba(72,33,115,0.7)"},"error_x":{"color":"rgba(72,33,115,0.7)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[216],"x":["Jan"],"type":"bar","name":"Jan","marker":{"color":"rgba(68,1,84,0.7)","line":{"color":"rgba(68,1,84,1)"}},"textfont":{"color":"rgba(68,1,84,0.7)"},"error_y":{"color":"rgba(68,1,84,0.7)"},"error_x":{"color":"rgba(68,1,84,0.7)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>The number of individuals dead upon the arrival of EMS responders peaks in the months of January (216 deaths) and July (192 deaths). Death numbers are the highest in the Winter and Summer months, while September has the lowest death count upon arrival (143 deaths).</p>
+</div>
+<div id="death-counts-by-neighborhood" class="section level1">
+<h1>Death Counts by Neighborhood</h1>
+<div id="htmlwidget-75b922763123f49dd713" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-75b922763123f49dd713">{"x":{"visdat":{"10616a7431fe":["function () ","plotlyVisDat"]},"cur_data":"10616a7431fe","attrs":{"10616a7431fe":{"y":{},"x":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Death Count on Arrival by NYC Neighborhood","xaxis":{"domain":[0,1],"automargin":true,"title":"Neighborhood","type":"category","categoryorder":"array","categoryarray":["central harlem","chelsea and clinton","east harlem","gramercy park and murray hill","greenwich village and soho","inwood and washington heights","lower east side","lower manhattan","upper east side","upper west side"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Dead on Arrival (n)"},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"showSendToCloud":false},"data":[{"y":[247],"x":["central harlem"],"type":"bar","name":"central harlem","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[196],"x":["chelsea and clinton"],"type":"bar","name":"chelsea and clinton","marker":{"color":"rgba(228,156,113,1)","line":{"color":"rgba(228,156,113,1)"}},"textfont":{"color":"rgba(228,156,113,1)"},"error_y":{"color":"rgba(228,156,113,1)"},"error_x":{"color":"rgba(228,156,113,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[181],"x":["east harlem"],"type":"bar","name":"east harlem","marker":{"color":"rgba(201,153,157,1)","line":{"color":"rgba(201,153,157,1)"}},"textfont":{"color":"rgba(201,153,157,1)"},"error_y":{"color":"rgba(201,153,157,1)"},"error_x":{"color":"rgba(201,153,157,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[161],"x":["gramercy park and murray hill"],"type":"bar","name":"gramercy park and murray hill","marker":{"color":"rgba(175,154,200,1)","line":{"color":"rgba(175,154,200,1)"}},"textfont":{"color":"rgba(175,154,200,1)"},"error_y":{"color":"rgba(175,154,200,1)"},"error_x":{"color":"rgba(175,154,200,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[86],"x":["greenwich village and soho"],"type":"bar","name":"greenwich village and soho","marker":{"color":"rgba(226,148,184,1)","line":{"color":"rgba(226,148,184,1)"}},"textfont":{"color":"rgba(226,148,184,1)"},"error_y":{"color":"rgba(226,148,184,1)"},"error_x":{"color":"rgba(226,148,184,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[259],"x":["inwood and washington heights"],"type":"bar","name":"inwood and washington heights","marker":{"color":"rgba(176,209,99,1)","line":{"color":"rgba(176,209,99,1)"}},"textfont":{"color":"rgba(176,209,99,1)"},"error_y":{"color":"rgba(176,209,99,1)"},"error_x":{"color":"rgba(176,209,99,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[275],"x":["lower east side"],"type":"bar","name":"lower east side","marker":{"color":"rgba(227,217,62,1)","line":{"color":"rgba(227,217,62,1)"}},"textfont":{"color":"rgba(227,217,62,1)"},"error_y":{"color":"rgba(227,217,62,1)"},"error_x":{"color":"rgba(227,217,62,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[41],"x":["lower manhattan"],"type":"bar","name":"lower manhattan","marker":{"color":"rgba(245,207,100,1)","line":{"color":"rgba(245,207,100,1)"}},"textfont":{"color":"rgba(245,207,100,1)"},"error_y":{"color":"rgba(245,207,100,1)"},"error_x":{"color":"rgba(245,207,100,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[248],"x":["upper east side"],"type":"bar","name":"upper east side","marker":{"color":"rgba(219,192,155,1)","line":{"color":"rgba(219,192,155,1)"}},"textfont":{"color":"rgba(219,192,155,1)"},"error_y":{"color":"rgba(219,192,155,1)"},"error_x":{"color":"rgba(219,192,155,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[344],"x":["upper west side"],"type":"bar","name":"upper west side","marker":{"color":"rgba(179,179,179,1)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,1)"},"error_y":{"color":"rgba(179,179,179,1)"},"error_x":{"color":"rgba(179,179,179,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>In 2018, the neighborhood with the most people dead upon arrival of EMS response teams was the Upper West Side, with 344 people. The Lower East Side had the second highest with 275, and Inwood/Washington Heights had the third highest with 259. The neighborhood with the lowest number of deaths upon arrival was Lower Manhattan with only 41 people, followed by Greenwich Village/SoHo with 86.</p>
+<div id="death-counts-by-zipcode" class="section level2">
+<h2>Death Counts by Zipcode</h2>
+<pre class="r"><code>ems_data_clean %&gt;% 
+  select(arrival_outcome, neighbourhood, zipcode) %&gt;% 
+  drop_na(arrival_outcome) %&gt;%
+  group_by(neighbourhood, zipcode, arrival_outcome) %&gt;%
+  count(arrival_outcome, sort = &quot;TRUE&quot;, name = &quot;death count&quot;) %&gt;%
+  filter(arrival_outcome == &quot;dead&quot;)%&gt;% 
+  knitr::kable() </code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">neighbourhood</th>
+<th align="right">zipcode</th>
+<th align="left">arrival_outcome</th>
+<th align="right">death count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">upper west side</td>
+<td align="right">10025</td>
+<td align="left">dead</td>
+<td align="right">166</td>
+</tr>
+<tr class="even">
+<td align="left">lower east side</td>
+<td align="right">10002</td>
+<td align="left">dead</td>
+<td align="right">140</td>
+</tr>
+<tr class="odd">
+<td align="left">east harlem</td>
+<td align="right">10029</td>
+<td align="left">dead</td>
+<td align="right">124</td>
+</tr>
+<tr class="even">
+<td align="left">upper west side</td>
+<td align="right">10024</td>
+<td align="left">dead</td>
+<td align="right">103</td>
+</tr>
+<tr class="odd">
+<td align="left">lower east side</td>
+<td align="right">10009</td>
+<td align="left">dead</td>
+<td align="right">81</td>
+</tr>
+<tr class="even">
+<td align="left">upper east side</td>
+<td align="right">10128</td>
+<td align="left">dead</td>
+<td align="right">75</td>
+</tr>
+<tr class="odd">
+<td align="left">upper west side</td>
+<td align="right">10023</td>
+<td align="left">dead</td>
+<td align="right">75</td>
+</tr>
+<tr class="even">
+<td align="left">central harlem</td>
+<td align="right">10027</td>
+<td align="left">dead</td>
+<td align="right">63</td>
+</tr>
+<tr class="odd">
+<td align="left">gramercy park and murray hill</td>
+<td align="right">10016</td>
+<td align="left">dead</td>
+<td align="right">61</td>
+</tr>
+<tr class="even">
+<td align="left">inwood and washington heights</td>
+<td align="right">10040</td>
+<td align="left">dead</td>
+<td align="right">58</td>
+</tr>
+<tr class="odd">
+<td align="left">east harlem</td>
+<td align="right">10035</td>
+<td align="left">dead</td>
+<td align="right">57</td>
+</tr>
+<tr class="even">
+<td align="left">chelsea and clinton</td>
+<td align="right">10011</td>
+<td align="left">dead</td>
+<td align="right">56</td>
+</tr>
+<tr class="odd">
+<td align="left">inwood and washington heights</td>
+<td align="right">10031</td>
+<td align="left">dead</td>
+<td align="right">55</td>
+</tr>
+<tr class="even">
+<td align="left">inwood and washington heights</td>
+<td align="right">10033</td>
+<td align="left">dead</td>
+<td align="right">55</td>
+</tr>
+<tr class="odd">
+<td align="left">inwood and washington heights</td>
+<td align="right">10032</td>
+<td align="left">dead</td>
+<td align="right">54</td>
+</tr>
+<tr class="even">
+<td align="left">lower east side</td>
+<td align="right">10003</td>
+<td align="left">dead</td>
+<td align="right">54</td>
+</tr>
+<tr class="odd">
+<td align="left">central harlem</td>
+<td align="right">10039</td>
+<td align="left">dead</td>
+<td align="right">51</td>
+</tr>
+<tr class="even">
+<td align="left">chelsea and clinton</td>
+<td align="right">10019</td>
+<td align="left">dead</td>
+<td align="right">50</td>
+</tr>
+<tr class="odd">
+<td align="left">central harlem</td>
+<td align="right">10026</td>
+<td align="left">dead</td>
+<td align="right">49</td>
+</tr>
+<tr class="even">
+<td align="left">upper east side</td>
+<td align="right">10075</td>
+<td align="left">dead</td>
+<td align="right">49</td>
+</tr>
+<tr class="odd">
+<td align="left">upper east side</td>
+<td align="right">10021</td>
+<td align="left">dead</td>
+<td align="right">48</td>
+</tr>
+<tr class="even">
+<td align="left">central harlem</td>
+<td align="right">10037</td>
+<td align="left">dead</td>
+<td align="right">45</td>
+</tr>
+<tr class="odd">
+<td align="left">upper east side</td>
+<td align="right">10028</td>
+<td align="left">dead</td>
+<td align="right">45</td>
+</tr>
+<tr class="even">
+<td align="left">chelsea and clinton</td>
+<td align="right">10036</td>
+<td align="left">dead</td>
+<td align="right">44</td>
+</tr>
+<tr class="odd">
+<td align="left">gramercy park and murray hill</td>
+<td align="right">10022</td>
+<td align="left">dead</td>
+<td align="right">43</td>
+</tr>
+<tr class="even">
+<td align="left">central harlem</td>
+<td align="right">10030</td>
+<td align="left">dead</td>
+<td align="right">39</td>
+</tr>
+<tr class="odd">
+<td align="left">inwood and washington heights</td>
+<td align="right">10034</td>
+<td align="left">dead</td>
+<td align="right">37</td>
+</tr>
+<tr class="even">
+<td align="left">gramercy park and murray hill</td>
+<td align="right">10010</td>
+<td align="left">dead</td>
+<td align="right">36</td>
+</tr>
+<tr class="odd">
+<td align="left">chelsea and clinton</td>
+<td align="right">10001</td>
+<td align="left">dead</td>
+<td align="right">35</td>
+</tr>
+<tr class="even">
+<td align="left">greenwich village and soho</td>
+<td align="right">10014</td>
+<td align="left">dead</td>
+<td align="right">32</td>
+</tr>
+<tr class="odd">
+<td align="left">greenwich village and soho</td>
+<td align="right">10013</td>
+<td align="left">dead</td>
+<td align="right">31</td>
+</tr>
+<tr class="even">
+<td align="left">upper east side</td>
+<td align="right">10065</td>
+<td align="left">dead</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="left">lower manhattan</td>
+<td align="right">10038</td>
+<td align="left">dead</td>
+<td align="right">24</td>
+</tr>
+<tr class="even">
+<td align="left">greenwich village and soho</td>
+<td align="right">10012</td>
+<td align="left">dead</td>
+<td align="right">23</td>
+</tr>
+<tr class="odd">
+<td align="left">gramercy park and murray hill</td>
+<td align="right">10017</td>
+<td align="left">dead</td>
+<td align="right">21</td>
+</tr>
+<tr class="even">
+<td align="left">chelsea and clinton</td>
+<td align="right">10018</td>
+<td align="left">dead</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">lower manhattan</td>
+<td align="right">10005</td>
+<td align="left">dead</td>
+<td align="right">6</td>
+</tr>
+<tr class="even">
+<td align="left">lower manhattan</td>
+<td align="right">10004</td>
+<td align="left">dead</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">lower manhattan</td>
+<td align="right">10006</td>
+<td align="left">dead</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">lower manhattan</td>
+<td align="right">10007</td>
+<td align="left">dead</td>
+<td align="right">2</td>
+</tr>
+<tr class="odd">
+<td align="left">lower manhattan</td>
+<td align="right">10280</td>
+<td align="left">dead</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">There were 43 zipcodes included</td>
+<td align="right">in this da</td>
+<td align="left">taset</td>
+<td align="right"></td>
+</tr>
+<tr class="odd">
+<td align="left">include only top ten in powerpoi</td>
+<td align="right">nt</td>
+<td align="left"></td>
+<td align="right"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="death-count-by-nyc-neighborhood-over-time-2018" class="section level1">
+<h1>Death Count by NYC Neighborhood Over Time, 2018:</h1>
+<div id="htmlwidget-cdfe1e234f57ace8d058" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cdfe1e234f57ace8d058">{"x":{"visdat":{"1061289c78c6":["function () ","plotlyVisDat"]},"cur_data":"1061289c78c6","attrs":{"1061289c78c6":{"x":{},"y":{},"mode":"lines+markers","color":{},"alpha":0.5,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Death Count on Arrival by NYC Neighborhood Over Time, 2018","xaxis":{"domain":[0,1],"automargin":true,"title":"Month","type":"category","categoryorder":"array","categoryarray":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Dead on Arrival (n)"},"legend":{"x":100,"y":0.5},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"],"y":[29,20,23,23,20,16,23,26,16,17,15,19],"mode":"lines+markers","type":"scatter","name":"central harlem","marker":{"color":"rgba(102,194,165,0.5)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,0.5)"},"error_y":{"color":"rgba(102,194,165,0.5)"},"error_x":{"color":"rgba(102,194,165,0.5)"},"line":{"color":"rgba(102,194,165,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"],"y":[17,17,10,15,14,19,18,16,14,23,16,17],"mode":"lines+markers","type":"scatter","name":"chelsea and clinton","marker":{"color":"rgba(228,156,113,0.5)","line":{"color":"rgba(228,156,113,1)"}},"textfont":{"color":"rgba(228,156,113,0.5)"},"error_y":{"color":"rgba(228,156,113,0.5)"},"error_x":{"color":"rgba(228,156,113,0.5)"},"line":{"color":"rgba(228,156,113,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"],"y":[17,15,23,13,17,12,13,10,18,16,13,14],"mode":"lines+markers","type":"scatter","name":"east harlem","marker":{"color":"rgba(201,153,157,0.5)","line":{"color":"rgba(201,153,157,1)"}},"textfont":{"color":"rgba(201,153,157,0.5)"},"error_y":{"color":"rgba(201,153,157,0.5)"},"error_x":{"color":"rgba(201,153,157,0.5)"},"line":{"color":"rgba(201,153,157,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"],"y":[23,9,17,13,8,13,16,10,10,15,14,13],"mode":"lines+markers","type":"scatter","name":"gramercy park and murray hill","marker":{"color":"rgba(175,154,200,0.5)","line":{"color":"rgba(175,154,200,1)"}},"textfont":{"color":"rgba(175,154,200,0.5)"},"error_y":{"color":"rgba(175,154,200,0.5)"},"error_x":{"color":"rgba(175,154,200,0.5)"},"line":{"color":"rgba(175,154,200,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"],"y":[7,7,7,9,8,7,11,6,7,6,5,6],"mode":"lines+markers","type":"scatter","name":"greenwich village and soho","marker":{"color":"rgba(226,148,184,0.5)","line":{"color":"rgba(226,148,184,1)"}},"textfont":{"color":"rgba(226,148,184,0.5)"},"error_y":{"color":"rgba(226,148,184,0.5)"},"error_x":{"color":"rgba(226,148,184,0.5)"},"line":{"color":"rgba(226,148,184,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"],"y":[28,27,21,18,16,28,24,20,12,22,19,24],"mode":"lines+markers","type":"scatter","name":"inwood and washington heights","marker":{"color":"rgba(176,209,99,0.5)","line":{"color":"rgba(176,209,99,1)"}},"textfont":{"color":"rgba(176,209,99,0.5)"},"error_y":{"color":"rgba(176,209,99,0.5)"},"error_x":{"color":"rgba(176,209,99,0.5)"},"line":{"color":"rgba(176,209,99,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"],"y":[26,25,19,19,24,15,30,21,18,23,31,24],"mode":"lines+markers","type":"scatter","name":"lower east side","marker":{"color":"rgba(227,217,62,0.5)","line":{"color":"rgba(227,217,62,1)"}},"textfont":{"color":"rgba(227,217,62,0.5)"},"error_y":{"color":"rgba(227,217,62,0.5)"},"error_x":{"color":"rgba(227,217,62,0.5)"},"line":{"color":"rgba(227,217,62,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"],"y":[5,7,1,4,3,5,2,2,4,2,4,2],"mode":"lines+markers","type":"scatter","name":"lower manhattan","marker":{"color":"rgba(245,207,100,0.5)","line":{"color":"rgba(245,207,100,1)"}},"textfont":{"color":"rgba(245,207,100,0.5)"},"error_y":{"color":"rgba(245,207,100,0.5)"},"error_x":{"color":"rgba(245,207,100,0.5)"},"line":{"color":"rgba(245,207,100,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"],"y":[28,17,20,13,11,20,26,27,15,17,31,23],"mode":"lines+markers","type":"scatter","name":"upper east side","marker":{"color":"rgba(219,192,155,0.5)","line":{"color":"rgba(219,192,155,1)"}},"textfont":{"color":"rgba(219,192,155,0.5)"},"error_y":{"color":"rgba(219,192,155,0.5)"},"error_x":{"color":"rgba(219,192,155,0.5)"},"line":{"color":"rgba(219,192,155,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"],"y":[36,24,23,26,29,34,29,23,29,25,33,33],"mode":"lines+markers","type":"scatter","name":"upper west side","marker":{"color":"rgba(179,179,179,0.5)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,0.5)"},"error_y":{"color":"rgba(179,179,179,0.5)"},"error_x":{"color":"rgba(179,179,179,0.5)"},"line":{"color":"rgba(179,179,179,0.5)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>Based on NYC EMS calls, the Upper West Side experienced the highest numbers of deaths per month in 2018 compared to all other NYC neighborhoods, on average. Additionally, the neighborhoods of Lower Manhattan and Greenwich Village and Soho experienced the least numbers of deaths per month in 2018.</p>
+<div id="mean-travel-time-by-neighborhood" class="section level2">
+<h2>Mean Travel Time by Neighborhood</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">arrival_outcome</th>
+<th align="right">mean_time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">alive</td>
+<td align="right">8.827288</td>
+</tr>
+<tr class="even">
+<td align="left">dead</td>
+<td align="right">4.910828</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>time_boro = ems_data_clean %&gt;%
+  select(neighbourhood, arrival_outcome, incident_travel_tm_seconds_qy) %&gt;%
+  group_by(arrival_outcome, neighbourhood) %&gt;%
+  drop_na(arrival_outcome) %&gt;%
+  summarize(mean_time = mean(incident_travel_tm_seconds_qy)) %&gt;% 
+  plot_ly(x = ~neighbourhood, y = ~mean_time/60, color = ~arrival_outcome, group = ~arrival_outcome, type = &quot;bar&quot;, colors = &quot;Set2&quot;) %&gt;% 
+  layout(title = &quot;Mean Travel Time by NYC Neighborhood&quot;,
+    xaxis = list(title = &quot;Neighborhood&quot;),
+         yaxis = list(title = &#39;Mean EMS Travel Time (min)&#39;),
+    showlegend = FALSE)
+time_boro</code></pre>
+<div id="htmlwidget-ef85446009f6a027e567" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ef85446009f6a027e567">{"x":{"visdat":{"10617e9f5dda":["function () ","plotlyVisDat"]},"cur_data":"10617e9f5dda","attrs":{"10617e9f5dda":{"x":{},"y":{},"color":{},"colors":"Set2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Mean Travel Time by NYC Neighborhood","xaxis":{"domain":[0,1],"automargin":true,"title":"Neighborhood","type":"category","categoryorder":"array","categoryarray":["central harlem","chelsea and clinton","east harlem","gramercy park and murray hill","greenwich village and soho","inwood and washington heights","lower east side","lower manhattan","upper east side","upper west side"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Mean EMS Travel Time (min)"},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["central harlem","chelsea and clinton","east harlem","gramercy park and murray hill","greenwich village and soho","inwood and washington heights","lower east side","lower manhattan","upper east side","upper west side"],"y":[9.90798248859292,8.80834924743402,10.4155040864887,7.61279194507448,8.64734693877551,9.24046458780457,7.2798071673202,8.04535851001178,8.32584511218741,9.02614584106714],"type":"bar","name":"alive","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["central harlem","chelsea and clinton","east harlem","gramercy park and murray hill","greenwich village and soho","inwood and washington heights","lower east side","lower manhattan","upper east side","upper west side"],"y":[5.6025641025641,5.0578231292517,4.96565377532228,4.37567287784679,5.32209302325581,5.32947232947233,4.42260606060606,4.68089430894309,4.4505376344086,4.88352713178295],"type":"bar","name":"dead","marker":{"color":"rgba(179,179,179,1)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,1)"},"error_y":{"color":"rgba(179,179,179,1)"},"error_x":{"color":"rgba(179,179,179,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>The overall mean response time for those who survived was 8.83 minutes, while the average for those who died was 4.91 minutes. In the graph we can see that East and Central Harlem, as well as the Upper West Side, have above the average travel times for alive arrival. And Inwoode and Washington heights, Central Harlem, and Greenwich Village and Soho have above the mean travel times for dead arrival.</p>
+</div>
+</div>
+<div id="severity-code-by-travel-time-for-each-neighborhood" class="section level1">
+<h1>Severity Code by Travel Time for Each Neighborhood:</h1>
+<div id="htmlwidget-b1fa530ad8e2b1b95c9f" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b1fa530ad8e2b1b95c9f">{"x":{"visdat":{"10615b34571a":["function () ","plotlyVisDat"]},"cur_data":"10615b34571a","attrs":{"10615b34571a":{"x":{},"y":{},"mode":"lines+markers","color":{},"alpha":0.5,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Mean Travel Time by Severity for each Neighborhood","xaxis":{"domain":[0,1],"automargin":true,"title":"Severity Code","type":"category","categoryorder":"array","categoryarray":["1","2","3","4","5","6","7","8","9"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Mean Travel Time (min)"},"legend":{"x":100,"y":0.5},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["1","2","3","4","5","6","7","8"],"y":[4.60731225296443,6.70332274817241,6.57967011891063,10.2474529780564,11.0209445898778,11.6717571338554,15.6980302399778,12.6690972222222],"mode":"lines+markers","type":"scatter","name":"central harlem","marker":{"color":"rgba(102,194,165,0.5)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,0.5)"},"error_y":{"color":"rgba(102,194,165,0.5)"},"error_x":{"color":"rgba(102,194,165,0.5)"},"line":{"color":"rgba(102,194,165,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["1","2","3","4","5","6","7","8"],"y":[4.18249106687085,6.18130069831417,6.24582543818096,8.59646993421662,9.14531706752337,9.39449219016438,15.4026336284637,10.9840909090909],"mode":"lines+markers","type":"scatter","name":"chelsea and clinton","marker":{"color":"rgba(228,156,113,0.5)","line":{"color":"rgba(228,156,113,1)"}},"textfont":{"color":"rgba(228,156,113,0.5)"},"error_y":{"color":"rgba(228,156,113,0.5)"},"error_x":{"color":"rgba(228,156,113,0.5)"},"line":{"color":"rgba(228,156,113,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["1","2","3","4","5","6","7","8"],"y":[4.50703395703396,7.02734950584007,7.05480748548075,11.031564498783,11.2228652418222,11.9451579050129,15.8685470612413,23.1997816593886],"mode":"lines+markers","type":"scatter","name":"east harlem","marker":{"color":"rgba(201,153,157,0.5)","line":{"color":"rgba(201,153,157,1)"}},"textfont":{"color":"rgba(201,153,157,0.5)"},"error_y":{"color":"rgba(201,153,157,0.5)"},"error_x":{"color":"rgba(201,153,157,0.5)"},"line":{"color":"rgba(201,153,157,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["1","2","3","4","5","6","7","8"],"y":[3.8930067001675,5.33931202223766,5.75738448007577,7.48981191222571,8.41818316978888,8.41553332098079,12.8028411827025,13.1659722222222],"mode":"lines+markers","type":"scatter","name":"gramercy park and murray hill","marker":{"color":"rgba(175,154,200,0.5)","line":{"color":"rgba(175,154,200,1)"}},"textfont":{"color":"rgba(175,154,200,0.5)"},"error_y":{"color":"rgba(175,154,200,0.5)"},"error_x":{"color":"rgba(175,154,200,0.5)"},"line":{"color":"rgba(175,154,200,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["1","2","3","4","5","6","7","8"],"y":[4.51452991452991,6.52879120879121,6.71456745554218,8.51825938566553,9.21781002638522,9.30440201538054,13.8475334375543,10.4777777777778],"mode":"lines+markers","type":"scatter","name":"greenwich village and soho","marker":{"color":"rgba(226,148,184,0.5)","line":{"color":"rgba(226,148,184,1)"}},"textfont":{"color":"rgba(226,148,184,0.5)"},"error_y":{"color":"rgba(226,148,184,0.5)"},"error_x":{"color":"rgba(226,148,184,0.5)"},"line":{"color":"rgba(226,148,184,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["1","2","3","4","5","6","7","8"],"y":[4.31971580817051,6.32326282928198,6.39220791886093,9.75097643097643,10.3190939901666,10.9511184476486,13.6527341842784,8.76794871794872],"mode":"lines+markers","type":"scatter","name":"inwood and washington heights","marker":{"color":"rgba(176,209,99,0.5)","line":{"color":"rgba(176,209,99,1)"}},"textfont":{"color":"rgba(176,209,99,0.5)"},"error_y":{"color":"rgba(176,209,99,0.5)"},"error_x":{"color":"rgba(176,209,99,0.5)"},"line":{"color":"rgba(176,209,99,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["1","2","3","4","5","6","7","8"],"y":[3.85834787667248,5.65209740552149,5.71346832621215,7.23316475442834,7.47114275079099,8.01036560766515,11.5392565001461,5.75315315315315],"mode":"lines+markers","type":"scatter","name":"lower east side","marker":{"color":"rgba(227,217,62,0.5)","line":{"color":"rgba(227,217,62,1)"}},"textfont":{"color":"rgba(227,217,62,0.5)"},"error_y":{"color":"rgba(227,217,62,0.5)"},"error_x":{"color":"rgba(227,217,62,0.5)"},"line":{"color":"rgba(227,217,62,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["1","2","3","4","5","6","7","8"],"y":[4.08286713286713,6.13081518704634,6.10171821305842,7.99028265596254,8.41400467232264,8.46163155535634,12.4902670623145,18.9021929824561],"mode":"lines+markers","type":"scatter","name":"lower manhattan","marker":{"color":"rgba(245,207,100,0.5)","line":{"color":"rgba(245,207,100,1)"}},"textfont":{"color":"rgba(245,207,100,0.5)"},"error_y":{"color":"rgba(245,207,100,0.5)"},"error_x":{"color":"rgba(245,207,100,0.5)"},"line":{"color":"rgba(245,207,100,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["1","2","3","4","5","6","7","8"],"y":[3.93416230366492,5.71646304675716,5.8157904148784,8.97607428987618,9.25641432856891,9.70484265200122,13.8829090051862,11.80125],"mode":"lines+markers","type":"scatter","name":"upper east side","marker":{"color":"rgba(219,192,155,0.5)","line":{"color":"rgba(219,192,155,1)"}},"textfont":{"color":"rgba(219,192,155,0.5)"},"error_y":{"color":"rgba(219,192,155,0.5)"},"error_x":{"color":"rgba(219,192,155,0.5)"},"line":{"color":"rgba(219,192,155,0.5)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["1","2","3","4","5","6","7","8"],"y":[4.51904761904762,6.18944325128036,6.26873773955032,9.45989757292363,9.93696500503525,10.4804619356639,14.4305319928788,9.39380952380952],"mode":"lines+markers","type":"scatter","name":"upper west side","marker":{"color":"rgba(179,179,179,0.5)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,0.5)"},"error_y":{"color":"rgba(179,179,179,0.5)"},"error_x":{"color":"rgba(179,179,179,0.5)"},"line":{"color":"rgba(179,179,179,0.5)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>With increasing initial severity level code, the average travel response time taken to reach the incident increases. There is a slower response time for higher initial severity codes, however there is a decrease in response time for severity score 8 (highest).The slowest response times for highest severity calls are for East Harlem and Lower Manhattan. Overall, EMS responders respond the slowest to East Harlem, then Central Harlem, and then Inwood and Washington Heights.</p>
+<div id="my-stuff-neeeeeeeeeeeeeeeeeeeeeeeeeewwwwwwwwwwwwwwwwwww" class="section level2">
+<h2>MY STUFF NEEEEEEEEEEEEEEEEEEEEEEEEEEWWWWWWWWWWWWWWWWWWW</h2>
+</div>
+<div id="percentage-of-intial-call-types" class="section level2">
+<h2>Percentage of Intial Call Types</h2>
+<pre class="r"><code>pie_chart_all = ems_data_clean %&gt;% 
+  select(initial_call_type) %&gt;% 
+  group_by(initial_call_type) %&gt;% 
+  count(initial_call_type, sort = &quot;TRUE&quot;, name=&quot;n&quot;) %&gt;%
+   plot_ly(labels = ~initial_call_type, values = ~n, type = &quot;pie&quot;,
+          textposition = &#39;inside&#39;,
+          textinfo = &#39;label+percent&#39;,
+          insidetextfont = list(color =&quot;Set2&quot;)) %&gt;% 
+  layout(title = &quot;Percentage of Initial Call Types&quot;, 
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+pie_chart_all  </code></pre>
+<p><div id="htmlwidget-961cd070fef61c3404e6" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-961cd070fef61c3404e6">{"x":{"visdat":{"10617f690c44":["function () ","plotlyVisDat"]},"cur_data":"10617f690c44","attrs":{"10617f690c44":{"labels":{},"values":{},"textposition":"inside","textinfo":"label+percent","insidetextfont":{"color":"Set2"},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Percentage of Initial Call Types","xaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"yaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"labels":["SICK","INJURY","EDP","DRUG","UNC","DIFFBR","CARDBR","CARD","INJMAJ","ABDPN","STATEP","PEDSTR","UNKNOW","MVAINJ","ALTMEN","CVAC","ARREST","SICMIN","SEIZR","RESPIR","ASTHMB","OTHER","INBLED","INJMIN","ANAPH","COLD","EDPC","SICKFC","CVA","OBLAB","STAB","HYPTN","SICPED","OBMAJ","RESPFC","TRAUMA","STNDBY","PD13","GYNHEM","MEDRXN","INHALE","OBMIS","CHOKE","HEAT","GYNMAJ","SHOT","BURNMI","JUMPDN","BURNMA","OBCOMP","ASTHFC","PEDFC","MCI21","JUMPUP","SAFE","DROWN","ELECT","AMPMIN","DIFFFC","MVA","MCI77","CHILDA","OBOUT","STRANS","ACTIVE","AMPMAJ","MCI76","SPEVNT","MEDVAC","VENOM","DOA","MCI21P","ABDPFC","MEDRFC","TRAUMS","UNCFC"],"values":[52287,43982,32292,31927,25366,19521,14834,14292,12657,10935,6541,5753,5489,5127,4750,4183,4037,3394,3349,2807,2686,2535,2366,2115,2106,1702,1656,1351,1225,1009,999,989,975,766,753,708,646,607,595,591,445,411,370,360,359,354,310,300,266,240,228,222,176,171,110,84,66,60,60,27,23,20,19,17,10,8,6,5,3,3,2,2,1,1,1,1],"textposition":["inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside"],"textinfo":"label+percent","insidetextfont":{"color":"Set2"},"type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script> The highest percentage of initial call types are those labeled “sick” (52,287), injured (43,982), EPD (psychiatric patient) these people are both dead and alive upon arrival arrest = 4037, 1.21% of calls</p>
+</div>
+<div id="percentage-of-dead-upon-arrival-by-initial-call-type" class="section level2">
+<h2>Percentage of Dead Upon Arrival by Initial Call Type</h2>
+<p>plotly showing which is highest of dead on arrival</p>
+<pre class="r"><code>pie_chart_dead = ems_data_clean %&gt;% 
+  select(initial_call_type, arrival_outcome) %&gt;% 
+  group_by(initial_call_type) %&gt;%
+  filter(arrival_outcome == &quot;dead&quot;) %&gt;% 
+  count(initial_call_type, sort = &quot;TRUE&quot;, name=&quot;n&quot;) %&gt;%
+  plot_ly(labels = ~initial_call_type, values = ~n, type = &quot;pie&quot;,
+          textposition = &#39;inside&#39;,
+          textinfo = &#39;label+percent&#39;,
+          insidetextfont = list(color = &quot;Set2&quot;)) %&gt;% 
+  layout(title = &quot;Percentage of Dead Upon Arrival by Initial Call Type&quot;, 
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+pie_chart_dead</code></pre>
+<p><div id="htmlwidget-c52a3556ad56e3f79a25" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c52a3556ad56e3f79a25">{"x":{"visdat":{"1061780221ec":["function () ","plotlyVisDat"]},"cur_data":"1061780221ec","attrs":{"1061780221ec":{"labels":{},"values":{},"textposition":"inside","textinfo":"label+percent","insidetextfont":{"color":"Set2"},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Percentage of Dead Upon Arrival by Initial Call Type","xaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"yaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"labels":["ARREST","UNC","UNKNOW","OTHER","DIFFBR","EDP","SICK","INJURY","TRAUMA","CARD","DRUG","JUMPDN","DROWN","CARDBR","CVAC","STATEP","ALTMEN","DOA","INJMAJ","SICKFC","ABDPN","CHOKE","CVA","INBLED","JUMPUP","PEDSTR","RESPFC","RESPIR","SEIZR","SHOT"],"values":[1515,286,88,29,23,16,16,9,8,6,6,5,4,3,3,3,2,2,2,2,1,1,1,1,1,1,1,1,1,1],"textposition":["inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside","inside"],"textinfo":"label+percent","insidetextfont":{"color":"Set2"},"type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script> The highest percent = those whose initial call type was labeled as ARREST, which is cardiac arrest (1515), and then “UNC” (unconscious) (286 calls). These people make up the majority of found dead upon arrival.</p>
+<p>arrest = 4037, 1.21% of intial calls, but 74.3 o</p>
+</div>
+<div id="cardiac-arrest-death-count-by-neighborhood-2018" class="section level2">
+<h2>Cardiac Arrest Death Count by Neighborhood, 2018</h2>
+<pre class="r"><code>cardiac_arrest_neighborhood = ems_data_clean %&gt;% 
+  select(initial_call_type, arrival_outcome, neighbourhood) %&gt;% 
+  filter(arrival_outcome == &quot;dead&quot;, initial_call_type == &quot;ARREST&quot;) %&gt;%
+  group_by(neighbourhood) %&gt;%  
+  count(initial_call_type, sort = &quot;TRUE&quot;, name=&quot;n&quot;) %&gt;%
+  plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = &quot;bar&quot;, colors = &quot;Set2&quot;) %&gt;% 
+  layout(title = &quot;Cardiac Arrest Death Count by Neighborhood&quot;,
+         xaxis = list(title = &quot;Neighborhood&quot;),
+         yaxis = list(title = &quot;Cardiac Arrest Death Count (n)&quot;), showlegend = FALSE)
+cardiac_arrest_neighborhood </code></pre>
+<div id="htmlwidget-ec0594e97abee2b3b115" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ec0594e97abee2b3b115">{"x":{"visdat":{"10616570acbb":["function () ","plotlyVisDat"]},"cur_data":"10616570acbb","attrs":{"10616570acbb":{"x":{},"y":{},"color":{},"colors":"Set2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Cardiac Arrest Death Count by Neighborhood","xaxis":{"domain":[0,1],"automargin":true,"title":"Neighborhood","type":"category","categoryorder":"array","categoryarray":["central harlem","chelsea and clinton","east harlem","gramercy park and murray hill","greenwich village and soho","inwood and washington heights","lower east side","lower manhattan","upper east side","upper west side"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Cardiac Arrest Death Count (n)"},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["central harlem"],"y":[187],"type":"bar","name":"central harlem","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["chelsea and clinton"],"y":[145],"type":"bar","name":"chelsea and clinton","marker":{"color":"rgba(228,156,113,1)","line":{"color":"rgba(228,156,113,1)"}},"textfont":{"color":"rgba(228,156,113,1)"},"error_y":{"color":"rgba(228,156,113,1)"},"error_x":{"color":"rgba(228,156,113,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["east harlem"],"y":[140],"type":"bar","name":"east harlem","marker":{"color":"rgba(201,153,157,1)","line":{"color":"rgba(201,153,157,1)"}},"textfont":{"color":"rgba(201,153,157,1)"},"error_y":{"color":"rgba(201,153,157,1)"},"error_x":{"color":"rgba(201,153,157,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["gramercy park and murray hill"],"y":[125],"type":"bar","name":"gramercy park and murray hill","marker":{"color":"rgba(175,154,200,1)","line":{"color":"rgba(175,154,200,1)"}},"textfont":{"color":"rgba(175,154,200,1)"},"error_y":{"color":"rgba(175,154,200,1)"},"error_x":{"color":"rgba(175,154,200,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["greenwich village and soho"],"y":[57],"type":"bar","name":"greenwich village and soho","marker":{"color":"rgba(226,148,184,1)","line":{"color":"rgba(226,148,184,1)"}},"textfont":{"color":"rgba(226,148,184,1)"},"error_y":{"color":"rgba(226,148,184,1)"},"error_x":{"color":"rgba(226,148,184,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["inwood and washington heights"],"y":[190],"type":"bar","name":"inwood and washington heights","marker":{"color":"rgba(176,209,99,1)","line":{"color":"rgba(176,209,99,1)"}},"textfont":{"color":"rgba(176,209,99,1)"},"error_y":{"color":"rgba(176,209,99,1)"},"error_x":{"color":"rgba(176,209,99,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["lower east side"],"y":[199],"type":"bar","name":"lower east side","marker":{"color":"rgba(227,217,62,1)","line":{"color":"rgba(227,217,62,1)"}},"textfont":{"color":"rgba(227,217,62,1)"},"error_y":{"color":"rgba(227,217,62,1)"},"error_x":{"color":"rgba(227,217,62,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["lower manhattan"],"y":[22],"type":"bar","name":"lower manhattan","marker":{"color":"rgba(245,207,100,1)","line":{"color":"rgba(245,207,100,1)"}},"textfont":{"color":"rgba(245,207,100,1)"},"error_y":{"color":"rgba(245,207,100,1)"},"error_x":{"color":"rgba(245,207,100,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["upper east side"],"y":[184],"type":"bar","name":"upper east side","marker":{"color":"rgba(219,192,155,1)","line":{"color":"rgba(219,192,155,1)"}},"textfont":{"color":"rgba(219,192,155,1)"},"error_y":{"color":"rgba(219,192,155,1)"},"error_x":{"color":"rgba(219,192,155,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["upper west side"],"y":[266],"type":"bar","name":"upper west side","marker":{"color":"rgba(179,179,179,1)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,1)"},"error_y":{"color":"rgba(179,179,179,1)"},"error_x":{"color":"rgba(179,179,179,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="cardiac-arrest-death-count-by-month" class="section level2">
+<h2>Cardiac Arrest Death Count by Month</h2>
+<pre class="r"><code>cardiac_arrest_month = ems_data_clean %&gt;% 
+  select(arrival_outcome, initial_call_type, month) %&gt;% 
+  filter(arrival_outcome == &quot;dead&quot;, initial_call_type == &quot;ARREST&quot;) %&gt;%
+  group_by(month) %&gt;%
+  count(initial_call_type, sort = &quot;TRUE&quot;, name=&quot;n&quot;) %&gt;%
+  plot_ly(x = ~month, y = ~n, color = ~month, type = &quot;bar&quot;, colors = &quot;Set2&quot;) %&gt;% 
+    layout(title = &quot;Cardiac Arrest Death Count by Month&quot;,
+         xaxis = list(title = &quot;Month&quot;),
+         yaxis = list(title = &quot;Cardiac Arrest Death Count (n)&quot;), showlegend = FALSE)
+cardiac_arrest_month</code></pre>
+<div id="htmlwidget-5647dd555288fa61ddf9" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5647dd555288fa61ddf9">{"x":{"visdat":{"106187a64a":["function () ","plotlyVisDat"]},"cur_data":"106187a64a","attrs":{"106187a64a":{"x":{},"y":{},"color":{},"colors":"Set2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Cardiac Arrest Death Count by Month","xaxis":{"domain":[0,1],"automargin":true,"title":"Month","type":"category","categoryorder":"array","categoryarray":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Cardiac Arrest Death Count (n)"},"showlegend":false,"hovermode":"closest"},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["Dec"],"y":[137],"type":"bar","name":"Dec","marker":{"color":"rgba(179,179,179,1)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,1)"},"error_y":{"color":"rgba(179,179,179,1)"},"error_x":{"color":"rgba(179,179,179,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Nov"],"y":[130],"type":"bar","name":"Nov","marker":{"color":"rgba(212,190,160,1)","line":{"color":"rgba(212,190,160,1)"}},"textfont":{"color":"rgba(212,190,160,1)"},"error_y":{"color":"rgba(212,190,160,1)"},"error_x":{"color":"rgba(212,190,160,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Oct"],"y":[127],"type":"bar","name":"Oct","marker":{"color":"rgba(237,202,125,1)","line":{"color":"rgba(237,202,125,1)"}},"textfont":{"color":"rgba(237,202,125,1)"},"error_y":{"color":"rgba(237,202,125,1)"},"error_x":{"color":"rgba(237,202,125,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Sept"],"y":[102],"type":"bar","name":"Sept","marker":{"color":"rgba(253,215,61,1)","line":{"color":"rgba(253,215,61,1)"}},"textfont":{"color":"rgba(253,215,61,1)"},"error_y":{"color":"rgba(253,215,61,1)"},"error_x":{"color":"rgba(253,215,61,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Aug"],"y":[109],"type":"bar","name":"Aug","marker":{"color":"rgba(209,217,69,1)","line":{"color":"rgba(209,217,69,1)"}},"textfont":{"color":"rgba(209,217,69,1)"},"error_y":{"color":"rgba(209,217,69,1)"},"error_x":{"color":"rgba(209,217,69,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Jul"],"y":[150],"type":"bar","name":"Jul","marker":{"color":"rgba(182,204,108,1)","line":{"color":"rgba(182,204,108,1)"}},"textfont":{"color":"rgba(182,204,108,1)"},"error_y":{"color":"rgba(182,204,108,1)"},"error_x":{"color":"rgba(182,204,108,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["June"],"y":[126],"type":"bar","name":"June","marker":{"color":"rgba(223,155,177,1)","line":{"color":"rgba(223,155,177,1)"}},"textfont":{"color":"rgba(223,155,177,1)"},"error_y":{"color":"rgba(223,155,177,1)"},"error_x":{"color":"rgba(223,155,177,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["May"],"y":[117],"type":"bar","name":"May","marker":{"color":"rgba(194,150,199,1)","line":{"color":"rgba(194,150,199,1)"}},"textfont":{"color":"rgba(194,150,199,1)"},"error_y":{"color":"rgba(194,150,199,1)"},"error_x":{"color":"rgba(194,150,199,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Apr"],"y":[116],"type":"bar","name":"Apr","marker":{"color":"rgba(156,159,194,1)","line":{"color":"rgba(156,159,194,1)"}},"textfont":{"color":"rgba(156,159,194,1)"},"error_y":{"color":"rgba(156,159,194,1)"},"error_x":{"color":"rgba(156,159,194,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Mar"],"y":[123],"type":"bar","name":"Mar","marker":{"color":"rgba(229,147,127,1)","line":{"color":"rgba(229,147,127,1)"}},"textfont":{"color":"rgba(229,147,127,1)"},"error_y":{"color":"rgba(229,147,127,1)"},"error_x":{"color":"rgba(229,147,127,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Feb"],"y":[121],"type":"bar","name":"Feb","marker":{"color":"rgba(211,164,122,1)","line":{"color":"rgba(211,164,122,1)"}},"textfont":{"color":"rgba(211,164,122,1)"},"error_y":{"color":"rgba(211,164,122,1)"},"error_x":{"color":"rgba(211,164,122,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["Jan"],"y":[157],"type":"bar","name":"Jan","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>proportion of dead upon arrival:</p>
+<pre class="r"><code>ems_data_clean %&gt;% 
+  select(arrival_outcome, initial_call_type) %&gt;% 
+  filter(initial_call_type == &quot;ARREST&quot;) %&gt;% 
+  group_by(arrival_outcome) %&gt;%
+  summarise_(n= ~n()) %&gt;%
+  mutate(proportion = prop.table(n)) </code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   arrival_outcome     n proportion
+##   &lt;fct&gt;           &lt;int&gt;      &lt;dbl&gt;
+## 1 alive            2522      0.625
+## 2 dead             1515      0.375</code></pre>
+<pre class="r"><code>## neighborhood code, insert each neighborhood 
+ems_data_clean %&gt;% 
+  select(arrival_outcome, initial_call_type, neighbourhood) %&gt;% 
+  filter(initial_call_type == &quot;ARREST&quot;, neighbourhood == &quot;lower manhattan&quot;) %&gt;% 
+  group_by(arrival_outcome) %&gt;%
+  summarise_(n= ~n()) %&gt;%
+  mutate(proportion = prop.table(n)) </code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   arrival_outcome     n proportion
+##   &lt;fct&gt;           &lt;int&gt;      &lt;dbl&gt;
+## 1 alive             104      0.825
+## 2 dead               22      0.175</code></pre>
+<p>mean travel time - cardiac arrest by neigborhood</p>
+<pre class="r"><code>time_boro_cardiac = ems_data_clean %&gt;%
+  select(neighbourhood, arrival_outcome, incident_travel_tm_seconds_qy, initial_call_type) %&gt;%
+  group_by(arrival_outcome, neighbourhood) %&gt;%
+  drop_na(arrival_outcome) %&gt;%
+  filter(initial_call_type == &quot;ARREST&quot;) %&gt;% 
+  summarize(mean_time = mean(incident_travel_tm_seconds_qy)) %&gt;% 
+  plot_ly(x = ~neighbourhood, y = ~mean_time/60, color = ~arrival_outcome, group = ~arrival_outcome, type = &quot;bar&quot;, colors = &quot;Set2&quot;) %&gt;% 
+  layout(title = &quot;Mean Travel Time by NYC Neighborhood&quot;,
+    xaxis = list(title = &quot;Neighborhood&quot;),
+         yaxis = list(title = &#39;Mean EMS Travel Time (min)&#39;))
+time_boro_cardiac</code></pre>
+<div id="htmlwidget-cc3dd5a537117775bb67" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cc3dd5a537117775bb67">{"x":{"visdat":{"10616b6ea173":["function () ","plotlyVisDat"]},"cur_data":"10616b6ea173","attrs":{"10616b6ea173":{"x":{},"y":{},"color":{},"colors":"Set2","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Mean Travel Time by NYC Neighborhood","xaxis":{"domain":[0,1],"automargin":true,"title":"Neighborhood","type":"category","categoryorder":"array","categoryarray":["central harlem","chelsea and clinton","east harlem","gramercy park and murray hill","greenwich village and soho","inwood and washington heights","lower east side","lower manhattan","upper east side","upper west side"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Mean EMS Travel Time (min)"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["central harlem","chelsea and clinton","east harlem","gramercy park and murray hill","greenwich village and soho","inwood and washington heights","lower east side","lower manhattan","upper east side","upper west side"],"y":[4.53481912144703,4.12427293064877,4.55190631808279,3.77837837837838,4.53521505376344,4.175625,3.80327552986513,4.09935897435897,3.85778443113772,4.53472222222222],"type":"bar","name":"alive","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["central harlem","chelsea and clinton","east harlem","gramercy park and murray hill","greenwich village and soho","inwood and washington heights","lower east side","lower manhattan","upper east side","upper west side"],"y":[4.70775401069519,4.30126436781609,4.36261904761905,3.98173333333333,4.36432748538012,4.52780701754386,3.92713567839196,4.37727272727273,4.01965579710145,4.31842105263158],"type":"bar","name":"dead","marker":{"color":"rgba(179,179,179,1)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,1)"},"error_y":{"color":"rgba(179,179,179,1)"},"error_x":{"color":"rgba(179,179,179,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>ems_data_clean %&gt;%
+  select(initial_call_type, incident_travel_tm_seconds_qy, neighbourhood) %&gt;%
+  group_by(neighbourhood, initial_call_type) %&gt;%
+  summarize(mean_time = mean(incident_travel_tm_seconds_qy/60)) %&gt;%
+    filter(initial_call_type %in% c(&quot;ARREST&quot;, &quot;SICK&quot;, &quot;EDP&quot;, &quot;DRUG&quot;, &quot;UNC&quot;, &quot;DIFFBR&quot;)) %&gt;%
+  filter(neighbourhood %in% c(&quot;lower east side&quot;, &quot;central harlem&quot;, &quot;upper west side&quot;)) %&gt;%
+  plot_ly(x = ~initial_call_type, y = ~mean_time, group = ~neighborhood, type = &quot;bar&quot;) %&gt;% 
+  layout(title = &quot;Mean Travel Time by Severity for each Neighborhood&quot;,
+    xaxis = list(title = &quot;Severity Code&quot;),
+         yaxis = list(title = &quot;Mean Travel Time (min)&quot;),
+         legend = list(x = 100, y = 0.5))</code></pre>
+<div id="htmlwidget-650e6f3bfb26114da8e2" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-650e6f3bfb26114da8e2">{"x":{"visdat":{"10614fd6b18a":["function () ","plotlyVisDat"]},"cur_data":"10614fd6b18a","attrs":{"10614fd6b18a":{"x":{},"y":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Mean Travel Time by Severity for each Neighborhood","xaxis":{"domain":[0,1],"automargin":true,"title":"Severity Code","type":"category","categoryorder":"array","categoryarray":["ABDPFC","ABDPN","ACTIVE","ALTMEN","AMPMAJ","AMPMIN","ANAPH","ARREST","ASTHFC","ASTHMB","BURNMA","BURNMI","CARD","CARDBR","CHILDA","CHOKE","COLD","CVA","CVAC","DIFFBR","DIFFFC","DOA","DROWN","DRUG","EDP","EDPC","ELECT","GYNHEM","GYNMAJ","HEAT","HYPTN","INBLED","INHALE","INJMAJ","INJMIN","INJURY","JUMPDN","JUMPUP","MCI21","MCI21P","MCI76","MCI77","MEDRFC","MEDRXN","MEDVAC","MVA","MVAINJ","OBCOMP","OBLAB","OBMAJ","OBMIS","OBOUT","OTHER","PD13","PEDFC","PEDSTR","RESPFC","RESPIR","SAFE","SEIZR","SHOT","SICK","SICKFC","SICMIN","SICPED","SPEVNT","STAB","STATEP","STNDBY","STRANS","TRAUMA","TRAUMS","UNC","UNCFC","UNKNOW","VENOM"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Mean Travel Time (min)"},"legend":{"x":100,"y":0.5},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["ARREST","DIFFBR","DRUG","EDP","SICK","UNC","ARREST","DIFFBR","DRUG","EDP","SICK","UNC","ARREST","DIFFBR","DRUG","EDP","SICK","UNC"],"y":[4.60749063670412,6.75907070707071,10.0840397509579,15.520378042465,11.7214632972322,6.43424984596426,3.84850152905199,5.81513727245598,7.23412785188425,11.4395279832009,8.01611901258787,5.46920865894188,4.41825236167341,6.20779774872912,9.01324318523288,14.1771641206424,10.5047161275729,5.99166666666667],"type":"bar","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>time_boro_cardiac = ems_data_clean %&gt;%
+  select(neighbourhood, initial_call_type, incident_travel_tm_seconds_qy) %&gt;%
+  group_by(neighbourhood, initial_call_type) %&gt;%
+  filter(initial_call_type %in% c(&quot;ARREST&quot;, &quot;SICK&quot;, &quot;DRUG&quot;)) %&gt;%
+  summarize(mean_time = mean(incident_travel_tm_seconds_qy/60)) %&gt;% 
+  plot_ly(x = ~neighbourhood, y = ~mean_time, color = ~initial_call_type, group = ~initial_call_type, type = &quot;bar&quot;, colors = &quot;Paired&quot;) %&gt;% 
+  layout(title = &quot;Mean Travel Time by NYC Neighborhood for Three Call Types&quot;,
+    xaxis = list(title = &quot;Neighborhood&quot;),
+         yaxis = list(title = &#39;Mean EMS Travel Time (min)&#39;))
+time_boro_cardiac</code></pre>
+<div id="htmlwidget-b205a99b470a93b55526" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b205a99b470a93b55526">{"x":{"visdat":{"106118bbce44":["function () ","plotlyVisDat"]},"cur_data":"106118bbce44","attrs":{"106118bbce44":{"x":{},"y":{},"color":{},"colors":"Paired","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Mean Travel Time by NYC Neighborhood for Three Call Types","xaxis":{"domain":[0,1],"automargin":true,"title":"Neighborhood","type":"category","categoryorder":"array","categoryarray":["central harlem","chelsea and clinton","east harlem","gramercy park and murray hill","greenwich village and soho","inwood and washington heights","lower east side","lower manhattan","upper east side","upper west side"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Mean EMS Travel Time (min)"},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["central harlem","chelsea and clinton","east harlem","gramercy park and murray hill","greenwich village and soho","inwood and washington heights","lower east side","lower manhattan","upper east side","upper west side"],"y":[4.60749063670412,4.16762387387387,4.49248878923767,3.8516330451489,4.48139963167587,4.30683006535948,3.84850152905199,4.1478835978836,3.94264007597341,4.41825236167341],"type":"bar","name":"ARREST","marker":{"color":"rgba(42,123,179,1)","line":{"color":"rgba(42,123,179,1)"}},"textfont":{"color":"rgba(42,123,179,1)"},"error_y":{"color":"rgba(42,123,179,1)"},"error_x":{"color":"rgba(42,123,179,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["central harlem","chelsea and clinton","east harlem","gramercy park and murray hill","greenwich village and soho","inwood and washington heights","lower east side","lower manhattan","upper east side","upper west side"],"y":[10.0840397509579,8.50131389945078,11.3056086341118,7.16088029083355,8.43952742616034,9.38934248141795,7.23412785188425,7.63795929156754,8.31713338246131,9.01324318523288],"type":"bar","name":"DRUG","marker":{"color":"rgba(142,163,87,1)","line":{"color":"rgba(142,163,87,1)"}},"textfont":{"color":"rgba(142,163,87,1)"},"error_y":{"color":"rgba(142,163,87,1)"},"error_x":{"color":"rgba(142,163,87,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["central harlem","chelsea and clinton","east harlem","gramercy park and murray hill","greenwich village and soho","inwood and washington heights","lower east side","lower manhattan","upper east side","upper west side"],"y":[11.7214632972322,9.37573451585824,12.0185062719782,8.39998005186515,9.31747517730497,10.9681532633194,8.01611901258787,8.42390954450346,9.83495769881557,10.5047161275729],"type":"bar","name":"SICK","marker":{"color":"rgba(111,67,157,1)","line":{"color":"rgba(111,67,157,1)"}},"textfont":{"color":"rgba(111,67,157,1)"},"error_y":{"color":"rgba(111,67,157,1)"},"error_x":{"color":"rgba(111,67,157,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>time_month = ems_data_clean %&gt;%
+  select(month, incident_travel_tm_seconds_qy) %&gt;%
+  group_by(month) %&gt;%
+  summarize(mean_time = mean(incident_travel_tm_seconds_qy/60)) %&gt;% 
+  plot_ly(x = ~month, y = ~mean_time, type = &quot;scatter&quot;, mode = &quot;lines+markers&quot;, alpha = 0.5) %&gt;% 
+  layout(title = &quot;Mean Travel Time by Month&quot;,
+    xaxis = list(title = &quot;Month&quot;),
+         yaxis = list(title = &quot;Mean Travel Time (min)&quot;),
+         legend = list(x = 100, y = 0.5))
+time_month</code></pre>
+<div id="htmlwidget-f64ebd6e9fb4f2d969e3" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f64ebd6e9fb4f2d969e3">{"x":{"visdat":{"106125e71c8a":["function () ","plotlyVisDat"]},"cur_data":"106125e71c8a","attrs":{"106125e71c8a":{"x":{},"y":{},"mode":"lines+markers","alpha":0.5,"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Mean Travel Time by Month","xaxis":{"domain":[0,1],"automargin":true,"title":"Month","type":"category","categoryorder":"array","categoryarray":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Mean Travel Time (min)"},"legend":{"x":100,"y":0.5},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["Jan","Feb","Mar","Apr","May","June","Jul","Aug","Sept","Oct","Nov","Dec"],"y":[8.56917109236697,8.33321351545651,8.62598302967333,8.38371289372309,9.02871971924067,8.94542001014573,8.72379779255533,8.81538065313691,9.31632803618509,9.11569401081872,8.94492506130211,8.75831679118394],"mode":"lines+markers","type":"scatter","marker":{"color":"rgba(31,119,180,0.5)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,0.5)"},"error_x":{"color":"rgba(31,119,180,0.5)"},"line":{"color":"rgba(31,119,180,0.5)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
