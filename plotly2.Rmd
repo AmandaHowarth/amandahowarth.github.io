@@ -44,6 +44,10 @@ ems_data_clean = read.csv("./data/EMS_Incident_Dispatch_Data.csv") %>%
 
 ```
 
+## Motivation 
+For the final project in my Data Science course, we were asked to collaborate with classmates to use elements of the data science process to answer questions on a topic of our choosing. My team was very interested in the [EMS Incident Dispatch Data](https://data.cityofnewyork.us/Public-Safety/EMS-Incident-Dispatch-Data/76xm-jjuj), which we found using NYC Open Data. My responsibilities for this project included cleaning data, producing visualizations and exploratory analyses, producing concrete data-centric deliverables, and interpreting results. Additionally, I became very interested in this topic and performed further analyses. 
+<br>
+
 ## Background Information
 
 **Emergency Medical Services** <br>
@@ -98,13 +102,15 @@ ems_data_clean %>%
   summarise_(n = ~n()) %>%
   filter(arrival_outcome == "dead") %>% 
   plot_ly(y = ~n, x = ~neighbourhood, type = "bar",
-          color = ~neighbourhood) %>% 
+          color = ~neighbourhood, colors = "YlGnBu") %>% 
   layout(title = "Death Count on Arrival by NYC Neighborhood",
     xaxis = list(title = "Neighborhood"),
          yaxis = list(title = 'Dead on Arrival (n)'),
     showlegend = FALSE)
 ```
+
 In 2018, the neighborhoods with the most deaths upon arrival of EMS responders were the Upper West Side (344), the Lower East Side (275), and Inwood/Washington Heights (259).The neighborhoods with the lowest number of deaths upon arrival were Lower Manhattan (41) and Greenwich Village/SoHo (86).
+<br> 
 <br> 
 
 
@@ -115,26 +121,29 @@ group_by(arrival_outcome, neighbourhood, month) %>%
 drop_na(arrival_outcome) %>% 
 summarise_(n_death = ~n()) %>%
 filter(arrival_outcome %in% "dead") %>%
-plot_ly(x = ~month, y = ~n_death, color = ~neighbourhood, type = "scatter", mode = "lines+markers", alpha = 0.5) %>%
+plot_ly(x = ~month, y = ~n_death, color = ~neighbourhood, colors= "YlGnBu", type = "scatter", mode = "lines+markers", alpha = 0.5) %>%
   layout(title = 'Death Count on Arrival by NYC Neighborhood Over Time, 2018',
     xaxis = list(title = 'Month'),
          yaxis = list(title = 'Dead on Arrival (n)'),
          legend = list(x = 100, y = 0.5))
 deaths_scatter
 ```
+
 Based on NYC EMS calls, the Upper West Side experienced the highest numbers of deaths per month in 2018 compared to all other NYC neighborhoods, on average. Additionally, the neighborhoods of Lower Manhattan and Greenwich Village and Soho experienced the least numbers of deaths per month in 2018.
 <br> 
+<br> 
 
-
+## Mean Travel Time Based on Arrival Outcome 
 ```{r warning=FALSE, echo=FALSE}
 table1 = ems_data_clean %>% 
   select(arrival_outcome, incident_travel_tm_seconds_qy) %>% 
   group_by(arrival_outcome) %>% 
   drop_na(arrival_outcome) %>%
-  summarize(mean_time = mean(incident_travel_tm_seconds_qy/60)) %>% 
+  summarize(mean_time = mean(incident_travel_tm_seconds_qy/60)) %>%
   knitr::kable()
 table1  
 ```
+<br> 
 <br> 
 
 ```{r warning=FALSE, echo=FALSE}
@@ -143,7 +152,7 @@ time_boro = ems_data_clean %>%
   group_by(arrival_outcome, neighbourhood) %>%
   drop_na(arrival_outcome) %>%
   summarize(mean_time = mean(incident_travel_tm_seconds_qy)) %>% 
-  plot_ly(x = ~neighbourhood, y = ~mean_time/60, color = ~arrival_outcome, group = ~arrival_outcome, type = "bar", colors = "Set2") %>% 
+  plot_ly(x = ~neighbourhood, y = ~mean_time/60, color = ~arrival_outcome, group = ~arrival_outcome, type = "bar", colors = "Paired") %>% 
   layout(title = "Mean Travel Time by NYC Neighborhood",
     xaxis = list(title = "Neighborhood"),
          yaxis = list(title = 'Mean EMS Travel Time (min)'),
@@ -153,22 +162,37 @@ time_boro
 
 The overall mean response time for those who survived was 8.83 minutes, while the average for those who died was 4.91 minutes. In the graph we can see that East and Central Harlem, as well as the Upper West Side, have above the average travel times for alive arrival. And Inwoode and Washington heights, Central Harlem, and Greenwich Village and Soho have above the mean travel times for dead arrival.
 <br> 
+<br>
 
+**Does mean incident travel time differ significantly between neighborhoods?** <br>
+_We performed an ANOVA test to assess whether the mean travel time varies significantly between neighborhoods in New York City:_
+```{r warning=FALSE, echo = FALSE}
+#ANOVA
+res.aov = aov(incident_travel_tm_seconds_qy/60 ~ neighbourhood, data = ems_data_clean)
+# Summary of the analysis
+summary(res.aov)
+```
+
+Given the p-value of <.0001 is smaller than 0.05, we can reject the null hypothesis and conclude that the mean incident travel time is not zero for at least one of the neighborhoods. Thus, there is a statistically significant difference between the mean incident travel time in seconds between neighborhoods, at the 5% level of significance. At least one neighborhood’s mean response time differs from those of the other neighborhoods. 
+<br>
+<br>
+<br>
 
 ```{r warning=FALSE, echo=FALSE}
 ems_data_clean %>%
   select(neighbourhood, initial_severity_level_code, incident_travel_tm_seconds_qy) %>%
   group_by(neighbourhood, initial_severity_level_code) %>% 
   summarize(mean_time = mean(incident_travel_tm_seconds_qy)) %>%
-  plot_ly(x = ~initial_severity_level_code, y = ~mean_time/60, group = ~neighbourhood, color = ~neighbourhood, type = "scatter", mode = "lines+markers", alpha = 0.5) %>% 
+  plot_ly(x = ~initial_severity_level_code, y = ~mean_time/60, group = ~neighbourhood, color = ~neighbourhood, colors = "YlGnBu", type = "scatter", mode = "lines+markers", alpha = 0.5) %>% 
   layout(title = "Mean Travel Time by Severity for each Neighborhood",
     xaxis = list(title = "Severity Code"),
          yaxis = list(title = "Mean Travel Time (min)"),
          legend = list(x = 100, y = 0.5))
 ```
+
 With increasing initial severity level code, the average travel response time taken to reach the incident increases. There is a slower response time for higher initial severity codes, however there is a decrease in response time for severity score 8 (highest).The slowest response times for highest severity calls are for East Harlem and Lower Manhattan. Overall, EMS responders respond the slowest to East Harlem, then Central Harlem, and then Inwood and Washington Heights.
 <br> 
-
+<br> 
 
 ```{r warning=FALSE, echo=FALSE}
 pie_chart_all = ems_data_clean %>% 
@@ -178,14 +202,16 @@ pie_chart_all = ems_data_clean %>%
    plot_ly(labels = ~initial_call_type, values = ~n, type = "pie",
           textposition = 'inside',
           textinfo = 'label+percent',
-          insidetextfont = list(color ="Set2")) %>% 
+          insidetextfont = list(color ="YlGnBu")) %>% 
   layout(title = "Percentage of Initial Call Types", 
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
 pie_chart_all  
 
 ```
+
 The highest percentage of initial call types (includes both alive and dead upon arrival) were those labeled as sick (52,287), injured (43,982), psychiatric-related (32,292), drug or alcohol abuse (31,927), and unconscious (25,366). 
+<br> 
 <br> 
 
 ```{r warning=FALSE, echo=FALSE}
@@ -197,14 +223,16 @@ pie_chart_dead = ems_data_clean %>%
   plot_ly(labels = ~initial_call_type, values = ~n, type = "pie",
           textposition = 'inside',
           textinfo = 'label+percent',
-          insidetextfont = list(color = "Set2")) %>% 
+          insidetextfont = list(color = "YlGnBu")) %>% 
   layout(title = "Percentage of Dead Upon Arrival by Initial Call Type", 
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
 pie_chart_dead
 
 ```
+
 The majority (~90%) of individuals found dead upon arrival had initial call types of cardiac arrest or of being unconscious. While cardiac arrest only makes up 1.21% of total calls, it makes up 74.3% (1515) of all deaths upon arrival.
+<br> 
 <br> 
 
 
@@ -214,27 +242,15 @@ cardiac_arrest_neighborhood = ems_data_clean %>%
   filter(arrival_outcome == "dead", initial_call_type == "ARREST") %>%
   group_by(neighbourhood) %>%  
   count(initial_call_type, sort = "TRUE", name="n") %>%
-  plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = "bar", colors = "Set2") %>% 
+  plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = "bar", colors = "YlGnBu") %>% 
   layout(title = "Cardiac Arrest Death Count by Neighborhood",
          xaxis = list(title = "Neighborhood"),
          yaxis = list(title = "Cardiac Arrest Death Count (n)"), showlegend = FALSE)
 cardiac_arrest_neighborhood 
 ```
 <br> 
-
-```{r warning=FALSE, echo=FALSE}
-cardiac_arrest_month = ems_data_clean %>% 
-  select(arrival_outcome, initial_call_type, month) %>% 
-  filter(arrival_outcome == "dead", initial_call_type == "ARREST") %>%
-  group_by(month) %>%
-  count(initial_call_type, sort = "TRUE", name="n") %>%
-  plot_ly(x = ~month, y = ~n, color = ~month, type = "bar", colors = "Set2") %>% 
-    layout(title = "Cardiac Arrest Death Count by Month",
-         xaxis = list(title = "Month"),
-         yaxis = list(title = "Cardiac Arrest Death Count (n)"), showlegend = FALSE)
-cardiac_arrest_month
-```
 <br> 
+
 
 ```{r warning=FALSE, echo=FALSE}
 ems_data_clean %>% 
@@ -244,14 +260,15 @@ ems_data_clean %>%
   summarise_(n = ~n()) %>%
   filter(arrival_outcome == "dead") %>% 
   plot_ly(y = ~n, x = ~month, type = "bar",
-          color = ~month, alpha = 0.7) %>% 
+          color = ~month, colors = "YlGnBu", alpha = 0.7) %>% 
   layout(title = "Death Count on Arrival for each Month in 2018",
     xaxis = list(title = "Month"),
          yaxis = list(title = 'Dead on Arrival (n)'),
     showlegend = FALSE)
 ```
-The number of individuals dead upon the arrival of EMS responders peaks in the months of January (216) and July (192). 
-The death count is the highest in the Winter and Summer months, while September has the lowest death count upon arrival (143).
+
+The number of individuals dead upon the arrival of EMS responders peaks in the months of January (216) and July (192). The death count is the highest in the Winter and Summer months, while September has the lowest death count upon arrival (143).
+<br> 
 <br> 
 
 ```{r warning=FALSE, echo=FALSE}
@@ -259,15 +276,17 @@ time_month = ems_data_clean %>%
   select(month, incident_travel_tm_seconds_qy) %>%
   group_by(month) %>%
   summarize(mean_time = mean(incident_travel_tm_seconds_qy/60)) %>% 
-  plot_ly(x = ~month, y = ~mean_time, type = "scatter", mode = "lines+markers", alpha = 0.5) %>% 
+  plot_ly(x = ~month, y = ~mean_time, type = "scatter", mode = "lines+markers", alpha = 0.5, colors = "YlGnBu") %>% 
   layout(title = "Mean Travel Time by Month",
     xaxis = list(title = "Month"),
          yaxis = list(title = "Mean Travel Time (min)"),
          legend = list(x = 100, y = 0.5))
 time_month
 ```
+
 The overall mean EMS response travel time is the highest in the month of September (over 9 minutes) and lowest in the months of February and April with values closer to 8 minutes. It is interesting that the time is the slowest in September, the month with the least number of deaths upon arrival.
 
+<br> 
 <br> 
 
 ## Discussion 
