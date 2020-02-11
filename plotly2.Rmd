@@ -53,11 +53,11 @@ For the final project in my Data Science course, we were asked to collaborate wi
 **Emergency Medical Services** <br>
 • Over $1.1 billion is spent each year on the EMS system in New York City. <br>
 • The New York City Fire Department Bureau of Emergency Medical Services (FDNY EMS) is responsible for the operation of all ambulances in the NYC 911 system. <br> 
-• In 2018, it was estimated that 46% of ambulance response to serious medical emergencies took longer than 10 minutes in NYC. <br>
+• In 2018, it was estimated that 46% of ambulance response to serious medical emergencies [took longer than 10 minutes in NYC.](https://cbcny.org/research/reviving-ems) <br>
 
 
 **Inefficiences in NYC EMS System** <br>
-• The Citizen’s Budget Commission described major inefficiencies in NYC’s EMS system in a recent report, Reviving EMS: Restructuring Emergency Medical Services in NYC. These inefficiencies included: <br>
+• The [Citizen’s Budget Commission](https://cbcny.org/research/reviving-ems) described major inefficiencies in NYC’s EMS system in a recent report, Reviving EMS: Restructuring Emergency Medical Services in NYC. These inefficiencies included: <br>
 
    **1.)** The EMS responds to many incidents that are not medical emergencies. <br>
    **2.)** Few resources are allocated to responding to rarer, more severe medical emergencies where the response time to the event is critical in affecting health outcomes.<br>
@@ -82,6 +82,10 @@ We narrowed the data set for research purposes in the following ways: <br>
    • No duplicate calls <br>
    • Only calls where EMS was dispatched <br>
    • Only calls where the final clinical outcome was not missing or unknown <br>
+   • Created outcome variable for dead or alive upon arrival
+   • Created neighborhood variables based on zip code 
+<br>
+
   
 ## Research Questions
 **Does EMS response travel time vary by the following factors:**_<br>
@@ -202,7 +206,7 @@ pie_chart_all = ems_data_clean %>%
    plot_ly(labels = ~initial_call_type, values = ~n, type = "pie",
           textposition = 'inside',
           textinfo = 'label+percent',
-          insidetextfont = list(color ="YlGnBu")) %>% 
+          insidetextfont = list(color ="Set2")) %>% 
   layout(title = "Percentage of Initial Call Types", 
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
@@ -223,7 +227,7 @@ pie_chart_dead = ems_data_clean %>%
   plot_ly(labels = ~initial_call_type, values = ~n, type = "pie",
           textposition = 'inside',
           textinfo = 'label+percent',
-          insidetextfont = list(color = "YlGnBu")) %>% 
+          insidetextfont = list(color = "Set2")) %>%
   layout(title = "Percentage of Dead Upon Arrival by Initial Call Type", 
          xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
          yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
@@ -296,16 +300,14 @@ The overall mean EMS response travel time is the highest in the month of Septemb
 
 **The death count on arrival varies by month.** The highest death counts are in January and July, which suggests extreme weather could be affecting the time it takes EMS responders to reach the incident or more individuals may be dying from deaths associated with extreme weather conditions.Additionally, the slowest response times occur in September, the month with the lowest death count upon arrival. 
 
-**The highest percentage of initial call types are those labeled as sick, injured,  psychiatric-related, drug/ alcohol abuse, and unconscious.** Many of these are non-threatening and may not be deemed “medical emergencies”. **Meanwhile, nearly 75% of cardiac arrest calls will be dead upon arrival.**
-
-Reponses times vary by call type and times also vary by neighborhood within call type (e.g., Central Harlem has the slowest response times for both sick and drug/alcohol-related calls). More resources should be allocated to threatening medical emergencies. 
+**The highest percentage of initial call types are those labeled as sick, injured,  psychiatric-related, drug/ alcohol abuse, and unconscious.** Many of these are non-threatening and may not be deemed “medical emergencies”. **Meanwhile, nearly 75% of cardiac arrest calls will be dead upon arrival.** More resources should be allocated to threatening medical emergencies. 
 
 <br> 
 
 ## Strengths and Limiitations 
-• Only analyzed response times in Manhattan (2018). <br>
-• Data set did not include variables for traffic, location of nearest fire station/EMS station, or demographic data (age, race, income).<br>
-• Our data is collected only after the first 911 call taker has passed the call along to the FDNY EMS (Incident creation). Thus, it does not include the amount of time the caller spent explaining their emergency to the dispatcher before being transferred to the FDNY. <br>
+• We only analyzed response times in Manhattan (2018). This can be seen a a strength because there is limited research analyzing the differences in time between neighborhoods within Manhattan. However, limiting our analyses to Manhattan did not allow us to examine other boroughs, which could have much slower resposne times overall and may need more resources than Manhattan. <br>
+• Our data set did not include variables for traffic, location of nearest fire station/EMS station, or demographic data (age, race, income).<br>
+• Our data is collected only after the first 911 call taker has passed the call along to the FDNY EMS (Incident creation). It does not include the amount of time the caller spent explaining their emergency to the dispatcher before being transferred to the FDNY. Thus, the total response time from the beginning of the incident to the arrival of an EMS responder is actually longer. <br>
 
 <br> 
 
