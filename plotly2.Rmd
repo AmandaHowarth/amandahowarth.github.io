@@ -46,6 +46,7 @@ ems_data_clean = read.csv("./data/EMS_Incident_Dispatch_Data.csv") %>%
 
 ## Motivation 
 For the final project in my Data Science course, we were asked to collaborate with classmates to use elements of the data science process to answer questions on a topic of our choosing. My team was very interested in the [EMS Incident Dispatch Data](https://data.cityofnewyork.us/Public-Safety/EMS-Incident-Dispatch-Data/76xm-jjuj), which we found using NYC Open Data. My responsibilities for this project included cleaning data, producing visualizations and exploratory analyses, producing concrete data-centric deliverables, and interpreting results. Additionally, I became very interested in this topic and performed further analyses. 
+
 <br>
 
 ## Background Information
@@ -84,6 +85,7 @@ We narrowed the data set for research purposes in the following ways: <br>
    • Only calls where the final clinical outcome was not missing or unknown <br>
    • Created outcome variable for dead or alive upon arrival
    • Created neighborhood variables based on zip code 
+   
 <br>
 
   
@@ -156,7 +158,7 @@ time_boro = ems_data_clean %>%
   group_by(arrival_outcome, neighbourhood) %>%
   drop_na(arrival_outcome) %>%
   summarize(mean_time = mean(incident_travel_tm_seconds_qy)) %>% 
-  plot_ly(x = ~neighbourhood, y = ~mean_time/60, color = ~arrival_outcome, group = ~arrival_outcome, type = "bar", colors = "Paired") %>% 
+  plot_ly(x = ~neighbourhood, y = ~mean_time/60, color = ~arrival_outcome, group = ~arrival_outcome, type = "bar", colors = c("#6699CC", "#336699")) %>% 
   layout(title = "Mean Travel Time by NYC Neighborhood",
     xaxis = list(title = "Neighborhood"),
          yaxis = list(title = 'Mean EMS Travel Time (min)'),
@@ -215,8 +217,10 @@ pie_chart_all
 ```
 
 The highest percentage of initial call types (includes both alive and dead upon arrival) were those labeled as sick (52,287), injured (43,982), psychiatric-related (32,292), drug or alcohol abuse (31,927), and unconscious (25,366). 
+
 <br> 
 <br> 
+
 
 ```{r warning=FALSE, echo=FALSE}
 pie_chart_dead = ems_data_clean %>% 
@@ -236,8 +240,10 @@ pie_chart_dead
 ```
 
 The majority (~90%) of individuals found dead upon arrival had initial call types of cardiac arrest or of being unconscious. While cardiac arrest only makes up 1.21% of total calls, it makes up 74.3% (1515) of all deaths upon arrival.
+
 <br> 
 <br> 
+
 
 
 ```{r warning=FALSE, echo=FALSE}
@@ -304,16 +310,19 @@ The overall mean EMS response travel time is the highest in the month of Septemb
 
 <br> 
 
-## Strengths and Limiitations 
-• We only analyzed response times in Manhattan (2018). This can be seen a a strength because there is limited research analyzing the differences in time between neighborhoods within Manhattan. However, limiting our analyses to Manhattan did not allow us to examine other boroughs, which could have much slower resposne times overall and may need more resources than Manhattan. <br>
+## Strengths and Limitations 
+• We only analyzed response times in Manhattan (2018). This can be seen as a strength because there is limited research analyzing the differences in time between neighborhoods within Manhattan. However, limiting our analyses to Manhattan did not allow us to examine other boroughs, which may have much slower resposne times overall and may need more resources than Manhattan. <br>
+
 • Our data set did not include variables for traffic, location of nearest fire station/EMS station, or demographic data (age, race, income).<br>
+
 • Our data is collected only after the first 911 call taker has passed the call along to the FDNY EMS (Incident creation). It does not include the amount of time the caller spent explaining their emergency to the dispatcher before being transferred to the FDNY. Thus, the total response time from the beginning of the incident to the arrival of an EMS responder is actually longer. <br>
 
 <br> 
 
 ## Conclusion
-• We agree with the Citizen’s Budget Commission’s report that there are inefficiencies in NYC’s EMS system. <br>
+**We agree with the Citizen’s Budget Commission’s report that there are inefficiencies in NYC’s EMS system.** Based on our results, we believe that while improving overall EMS time is ideal, attention should be focused on improving times in certain neighborhoods and ensuring more resources are allocated to these neighborhoods (Central Harlem, East Harlem, Inwood/Washington Heights, and Upper West Side). Further efforts should be made to decrease response times in life-threatening medical emergencies and during certain time frames (winter and summer months). <br>
 
-• Based on our results, we believe that while improving overall EMS time is ideal, attention should be focused on improving times in certain neighborhoods and ensuring more resources are allocated to these neighborhoods (Central Harlem, East Harlem, Inwood/Washington Heights, and Upper West Side). Further efforts should be made to decrease response times in life-threatening medical emergencies and during certain time frames (winter and summer months). <br>
-
-• Further research of response times should include neighborhood demographic factors (age, race), weekday, traffic details, and locations of fire stations/EMS stations. 
+Further research of response times should include neighborhood demographic factors (age, race), weekday, traffic details, and locations of fire stations/EMS stations. 
+<br>
+<br>
+<br>
